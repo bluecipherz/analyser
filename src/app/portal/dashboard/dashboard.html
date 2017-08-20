@@ -1,0 +1,34 @@
+<div class="dashboard">
+    <div class="db-header">
+    </div>
+    <div class="db-leftpan">
+        <div class="dbl-header">PRODUCTS</div>
+        <div class="dbl-item"
+             ng-repeat="item in vm.productList"
+             ng-class="{'active':vm.state.product.id == item.id}"
+             ng-click="vm.selectProduct(item)">{{item.name}}</div>
+    </div>
+    <div class="db-midpan">
+        <div class="empty" ng-if="!vm.state.product">
+            No Products Selected
+        </div>
+        <div class="dbm-container" ng-if="vm.state.product">
+            <div class="dbmc-button" ng-class="{'red':vm.state.product.debugging}" ng-click="vm.changeMode()">
+                <span ng-show="!vm.state.product.debugging">Turn On Remote Debugging</span>
+                <span ng-show="vm.state.product.debugging">Turn Off Remote Debugging</span>
+            </div>
+            <div class="dbmc-button" ng-show="vm.state.product.debugging" ng-click="vm.syncAPICalls()">Sync</div>
+            <div class="dbmc-debugger">
+                <div class="dbmcd-list">
+                    <div class="dbmcdl-item"
+                         ng-class="{'active':vm.state.apicall.id == call.id}"
+                         ng-click="vm.selectAPICall(call)" ng-repeat="call in vm.apicalls | orderBy:'-'">{{call.apiEndpoint}} : {{ call.timestamp | date : 'hh mm a'}}</div>
+                </div>
+                <div class="dbmcd-container">
+                    <!--{{vm.state.apicall.parameters}}-->
+                    <pre></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
